@@ -1,3 +1,4 @@
+/* TaskCard.tsx */
 "use client";
 import { Task } from "@prisma/client";
 import React, { useTransition } from "react";
@@ -7,21 +8,28 @@ import { cn } from "@/lib/utils";
 import { setTaskToDone } from "@/actions/task";
 import { useRouter } from "next/navigation";
 
+/**
+ * Determines the color for the expiration date text based on time remaining
+ * @param expiresAt The task's expiration date
+ * @returns CSS class for the appropriate text color
+ */
 function getExpirationColor(expiresAt: Date) {
   const days = Math.floor(expiresAt.getTime() - Date.now()) / 1000 / 60 / 60;
 
   if (days < 0) return "text-gray-300 dark:text-gray-400";
-
   if (days <= 3 * 24) return "text-red-500 dark:text-red-400";
   if (days <= 7 * 24) return "text-orange-500 dark:text-orange-400";
   return "text-gree-500 dark:text-green-400";
 }
 
 function TaskCard({ task }: { task: Task }) {
+  // Component state and hooks
   const [isLoading, startTransition] = useTransition();
   const router = useRouter();
+
   return (
     <div className="flex gap-2 items-start">
+      {/* Task completion checkbox */}
       <Checkbox
         id={task.id.toString()}
         className="w-5 h-5"
@@ -34,6 +42,8 @@ function TaskCard({ task }: { task: Task }) {
           });
         }}
       />
+      
+      {/* Task content and expiration date */}
       <label
         htmlFor={task.id.toString()}
         className={cn(

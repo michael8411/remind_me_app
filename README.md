@@ -1,4 +1,4 @@
-# **RemindMe App** 📝⏰  
+# **RemindMe App**  
 
 A full-stack reminder and task management app created with **Next.js, TypeScript, Prisma, Clerk authentication, React Hook Form, ShadCN UI, and Tailwind CSS.** This project is based on a structured lesson, however it has been enlarged and refactored to underline important principles in modern full-stack programming.
 
@@ -9,7 +9,7 @@ This project provided a good opportunity to improve my grasp of Next.js 14's ser
 
 ---
 
-## **🚀 Tech Stack**
+## ** Tech Stack**
 | Technology        | Purpose |
 |------------------|---------|
 | **Next.js 14**  | Full-stack framework for React with server components and server actions |
@@ -27,28 +27,28 @@ This project provided a good opportunity to improve my grasp of Next.js 14's ser
 
 ---
 
-## **📌 Features**
-### **✅ Authentication & User Management**
+## ** Features**
+### **Authentication & User Management**
 - **Clerk Authentication** for user sign-up and login
 - **Middleware protection** for secured routes
 - **Session management** with Next.js server actions
 - **User profile button** with logout functionality
 
-### **📋 Task & Collection Management**
+### **Task & Collection Management**
 - **CRUD Operations** (Create, Read, Update, Delete) for tasks and collections
 - **Database-backed collections** using Prisma ORM
 - **Customizable collection colors** with Tailwind gradients
 - **Progress tracking** with dynamic progress bars
 - **Task completion toggle** with server action updates
 
-### **🎨 UI & Theming**
+### **UI & Theming**
 - **ShadCN UI components** for a modern, accessible design
 - **Light & Dark mode toggle** with `next-themes`
 - **Gradient-styled buttons and UI elements**
 - **Animated loading skeletons** for smooth UI transitions
 - **Persistent UI state handling** with React’s `useState` and `useTransition`
 
-### **🔧 Backend & Database**
+### **Backend & Database**
 - **Prisma ORM** for managing relational data
 - **Server-side rendering (SSR) & API-less architecture** with Next.js Server Actions
 - **SQLite for local development**, scalable to PostgreSQL/MySQL in production
@@ -59,19 +59,19 @@ This project provided a good opportunity to improve my grasp of Next.js 14's ser
 
 ---
 
-## **🛠️ Installation & Setup**
-### **1️⃣ Clone the Repository**
+## ** Installation & Setup**
+### ** Clone the Repository**
 ```sh
 git clone https://github.com/michael8411/remind-me-app.git
 cd remind-me-app
 ```
-## **2️⃣ Install Dependencies**
+## ** Install Dependencies**
 Run the following command to install project dependencies:
 
 ```sh
 npm install
 ```
-## **3️⃣ Setup Environment Variables**
+## ** Setup Environment Variables**
 # Clerk Authentication
 ```sh
 NEXT_PUBLIC_CLERK_FRONTEND_API=your-clerk-frontend-api
@@ -80,12 +80,12 @@ CLERK_SECRET_KEY=your-clerk-secret-key
 CLERK_SIGN_IN_URL=/auth/sign-in
 CLERK_SIGN_UP_URL=/auth/sign-up
 ```
-## **4️⃣ Initialize Prisma & Database**
+## ** Initialize Prisma & Database**
 ```sh
 npx prisma migrate dev --name init
 npx prisma generate
 ```
-## **4️⃣  Run the Development Server**
+## **  Run the Development Server**
 ```sh
 npm run dev
 ```

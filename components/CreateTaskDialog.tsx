@@ -1,3 +1,4 @@
+/*CreateTaskDialog*/
 "use client";
 import { Collection } from "@prisma/client";
 import React from "react";
@@ -40,6 +41,7 @@ interface Props {
 }
 
 function CreateTaskDialog({ open, collection, setOpen }: Props) {
+  // Initialize form with zod schema validation
   const form = useForm<createTaskSchemaType>({
     resolver: zodResolver(createTaskSchema),
     defaultValues: {
@@ -49,11 +51,13 @@ function CreateTaskDialog({ open, collection, setOpen }: Props) {
 
   const router = useRouter();
 
+  // Handle dialog close and form reset
   const openChangeWrapper = (value: boolean) => {
     setOpen(value);
     form.reset();
   };
 
+  // Form submission handler
   const onSubmit = async (data: createTaskSchemaType) => {
     try {
       await createTask(data);
@@ -75,6 +79,7 @@ function CreateTaskDialog({ open, collection, setOpen }: Props) {
   return (
     <Dialog open={open} onOpenChange={openChangeWrapper}>
       <DialogContent className="sm:max-w-[425px]">
+        {/* Dialog header */}
         <DialogHeader>
           <DialogTitle className="flex gap-2">
             Add task to collection:
@@ -92,12 +97,15 @@ function CreateTaskDialog({ open, collection, setOpen }: Props) {
             to a collection.
           </DialogDescription>
         </DialogHeader>
+
+        {/* Task form */}
         <div className="gap-4 py-4">
           <Form {...form}>
             <form
               className="space-y-4 flex flex-col"
               onSubmit={form.handleSubmit(onSubmit)}
             >
+              {/* Task content field */}
               <FormField
                 control={form.control}
                 name="content"
@@ -115,6 +123,8 @@ function CreateTaskDialog({ open, collection, setOpen }: Props) {
                   </FormItem>
                 )}
               />
+
+              {/* Task expiration date field */}
               <FormField
                 control={form.control}
                 name="expiresAt"
@@ -156,6 +166,8 @@ function CreateTaskDialog({ open, collection, setOpen }: Props) {
             </form>
           </Form>
         </div>
+
+        {/* Dialog footer with submit button */}
         <DialogFooter>
           <Button
             disabled={form.formState.isSubmitting}

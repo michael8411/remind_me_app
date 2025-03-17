@@ -1,3 +1,4 @@
+
 export enum CollectionColors {
     sunset = "bg-gradient-to-r from-red-500 to-orange-500",
     poppy = "bg-gradient-to-r from-rose-400 to-red-500",

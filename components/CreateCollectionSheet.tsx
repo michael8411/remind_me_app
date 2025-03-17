@@ -1,3 +1,4 @@
+/* CreateCollectionSheet.tsx */
 import React from "react";
 import {
   Sheet,
@@ -44,6 +45,7 @@ interface Props {
 }
 
 function CreateCollectionSheet({ open, onOpenChange }: Props) {
+  // Form initialization with zod schema validation
   const form = useForm<createCollectionSchemaType>({
     resolver: zodResolver(createCollectionSchema),
     defaultValues: {},
@@ -51,11 +53,12 @@ function CreateCollectionSheet({ open, onOpenChange }: Props) {
 
   const router = useRouter();
 
+  // Handle form submission
   const onSubmit = async (data: createCollectionSchemaType) => {
     try {
       await createCollection(data);
 
-      // Close the sheet
+      // Close the sheet and refresh the page
       openChangeWrapper(false);
       router.refresh();
 
@@ -64,7 +67,6 @@ function CreateCollectionSheet({ open, onOpenChange }: Props) {
         description: "Collection created successfully!",
       });
     } catch (e: any) {
-      // Show toast
       toast({
         title: "Error",
         description: "Something went wrong. Please try again later",
@@ -74,6 +76,7 @@ function CreateCollectionSheet({ open, onOpenChange }: Props) {
     }
   };
 
+  // Wrapper for sheet close that resets the form
   const openChangeWrapper = (open: boolean) => {
     form.reset();
     onOpenChange(open);
@@ -82,17 +85,21 @@ function CreateCollectionSheet({ open, onOpenChange }: Props) {
   return (
     <Sheet open={open} onOpenChange={openChangeWrapper}>
       <SheetContent>
+        {/* Sheet header */}
         <SheetHeader>
           <SheetTitle>Add new collection</SheetTitle>
           <SheetDescription>
             Collections are a way to group your tasks
           </SheetDescription>
         </SheetHeader>
+
+        {/* Collection form */}
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-4 flex flex-col"
           >
+            {/* Collection name field */}
             <FormField
               control={form.control}
               name="name"
@@ -108,6 +115,7 @@ function CreateCollectionSheet({ open, onOpenChange }: Props) {
               )}
             />
 
+            {/* Collection color field */}
             <FormField
               control={form.control}
               name="color"
@@ -152,6 +160,8 @@ function CreateCollectionSheet({ open, onOpenChange }: Props) {
             />
           </form>
         </Form>
+
+        {/* Form actions */}
         <div className="flex flex-col gap-3 mt-4">
           <Separator />
           <Button

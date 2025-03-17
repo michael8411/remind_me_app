@@ -1,3 +1,4 @@
+/*Logo.tsx*/
 import React from "react";
 
 function Logo() {

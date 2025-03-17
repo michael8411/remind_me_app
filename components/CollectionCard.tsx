@@ -1,3 +1,4 @@
+/* CollectionCard.tsx */
 "use client";
 import { Collection, Task } from "@prisma/client";
 import React, { useMemo, useState, useTransition } from "react";
@@ -36,15 +37,23 @@ interface Props {
 }
 
 function CollectionCard({ collection }: Props) {
+  // Component state
   const [isOpen, setIsOpen] = useState(true);
-  const router = useRouter();
-
   const [showCreateModal, setShowCreateModal] = useState(false);
-
+  const [isLoading, startTransition] = useTransition();
+  
+  const router = useRouter();
   const tasks = collection.tasks;
 
-  const [isLoading, startTransition] = useTransition();
+  // Calculate task completion metrics
+  const tasksDone = useMemo(() => {
+    return collection.tasks.filter((task) => task.done).length;
+  }, [collection.tasks]);
+  
+  const totalTasks = collection.tasks.length;
+  const progress = totalTasks === 0 ? 0 : (tasksDone / totalTasks) * 100;
 
+  // Handler for collection deletion
   const removeCollection = async () => {
     try {
       await deleteCollection(collection.id);
@@ -62,23 +71,18 @@ function CollectionCard({ collection }: Props) {
     }
   };
 
-  const tasksDone = useMemo(() => {
-    return collection.tasks.filter((task) => task.done).length;
-  }, [collection.tasks]);
-
-  const totalTasks = collection.tasks.length;
-
-  const progress = totalTasks === 0 ? 0 : (tasksDone / totalTasks) * 100;
-
   return (
     <>
+      {/* Task creation modal */}
       <CreateTaskDialog
         open={showCreateModal}
         setOpen={setShowCreateModal}
         collection={collection}
       />
 
+      {/* Collection container */}
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+        {/* Collection header */}
         <CollapsibleTrigger asChild>
           <Button
             variant={"ghost"}
@@ -93,7 +97,10 @@ function CollectionCard({ collection }: Props) {
             {isOpen && <CaretUpIcon className="h-6 w-6" />}
           </Button>
         </CollapsibleTrigger>
+        
+        {/* Collection content */}
         <CollapsibleContent className="flex rounded-b-md flex-col dark:bg-neutral-900 shadow-lg">
+          {/* Empty state */}
           {tasks.length === 0 && (
             <Button
               variant={"ghost"}
@@ -111,6 +118,8 @@ function CollectionCard({ collection }: Props) {
               </span>
             </Button>
           )}
+          
+          {/* Task list with progress */}
           {tasks.length > 0 && (
             <>
               <Progress className="rounded-none" value={progress} />
@@ -121,7 +130,10 @@ function CollectionCard({ collection }: Props) {
               </div>
             </>
           )}
+          
           <Separator />
+          
+          {/* Collection footer */}
           <footer className="h-[40px] px-4 p-[2px] text-xs text-neutral-500 flex justify-between items-center ">
             <p>Created at {collection.createdAt.toLocaleDateString("en-US")}</p>
             {isLoading && <div>Deleting...</div>}
